@@ -1,4 +1,4 @@
-resource "aws_eks_cluster" "" {
+resource "aws_eks_cluster" "temp" {
   role_arn = "AKIA6N7ZB2FSRQRETCEA"
   name     = "aws-eks-k8s-jumia_phone_validator"
 
