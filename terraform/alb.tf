@@ -8,7 +8,7 @@ resource "aws_lb_listener" "lb_listner_c" {
     target_group_arn = aws_lb_target_group.aws_lb_target_group_8_c.arn
     redirect {
       protocol = "TCP"
-      port     = "80"
+      port     = "8081"
     }
   }
 }
