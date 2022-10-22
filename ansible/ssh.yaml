@@ -1,0 +1,45 @@
+- hosts: all
+  remote_user: ubuntu
+  become: true
+
+  tasks:
+    - name: SSH - Disable password login
+      lineinfile: 
+        dest: /etc/ssh/sshd_config 
+        regexp: "^PasswordAuthentication" 
+        line: "PasswordAuthentication no" 
+        state: present  
+
+    - name: SSH - Disable root login
+      lineinfile: 
+        dest: /etc/ssh/sshd_config 
+        regexp: "^PermitRootLogin" 
+        line: "PermitRootLogin no" 
+        state: present          
+
+    - name: SSH - Restart service
+      service:
+        name: sshd
+        state: restarted
+
+    - name: UFW - Allow Ports
+      ufw:
+        rule: allow
+        port: 80,443,1337
+        proto: tcp
+
+    - name: UFW - Deny incoming traffic
+      ufw:
+        state: enabled
+        policy: deny
+        direction: incoming
+
+    - name: Change ssh port to 1337
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^#?Port 22'
+        line: 'Port 1337'
+        state: present
+        backup: yes
+
+    
